@@ -7,17 +7,5 @@ services:
       - 80:80
       - 443:443
     command: npm run build_n_run
-    # networks:
-    #   - proxy
     volumes:
       - .:/app
-      - /var/run/docker.sock:/var/run/docker.sock
-      # - sslcerts:/acme
-
-# volumes:
-#   sslcerts:
-#     external: true
-
-# networks:
-#   proxy:
-#     external: true

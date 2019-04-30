@@ -3,8 +3,7 @@ var Greenlock = require("greenlock");
 var greenlock = Greenlock.create({
     email: "cyrille.derche@dokspot.com"
 ,   agreeTos: true
-// ,   configDir: '~/.config/acme'
-,   configDir: require('path').join('acme', 'etc')
+,   configDir: '~/.config/acme'
 ,   communityMember: true
 ,   securityUpdates: true
 ,   server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
