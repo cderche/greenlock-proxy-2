@@ -1,4 +1,5 @@
 var Greenlock = require("greenlock");
+require('./greenlock-challenge-s3');
 
 var greenlock = Greenlock.create({
     email: "cyrille.derche@dokspot.com"
@@ -11,6 +12,14 @@ var greenlock = Greenlock.create({
 ,   approvedDomains: [ "docker.clientdomain1.com" , "docker.clientdomain2.com" , "node.clientdomain1.com" , "node.clientdomain2.com" ]
 ,   store: require('greenlock-store-fs')
 ,   debug: true
+,   challengeType: 'http-01'
+,   challenge: require('./greenlock-challenge-s3').create({
+        debug: true
+    ,   accessKeyId: process.env.AWS_ACCESS_KEY_ID
+    ,   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    ,   bucketName: process.env.AWS_BUCKET_NAME
+    ,   bucketRegion: process.env.AWS_BUCKET_REGION
+    })
 });
 
 ////////////////////////
