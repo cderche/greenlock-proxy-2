@@ -24,9 +24,10 @@ module.exports.create = (createOptions) => {
             challengeKey = encodeURIComponent(key);
             s3.putObject({ Key: challengeKey, Body: value }, function (err, data) {
                 if (err) {
-                    return alert('There was an error creating your challenge: ' + err.message);
+                    console.error('There was an error creating your challenge: ' + err.message);
+                } else {
+                    console.log('Successfully created challenge.');
                 }
-                alert('Successfully created challenge.');
                 done(err, data);
             });
         },
@@ -39,9 +40,10 @@ module.exports.create = (createOptions) => {
             challengeKey = encodeURIComponent(key);
             s3.putObject({ Key: challengeKey }, function (err, data) {
                 if (err) {
-                    return alert('There was an error retrieving your challenge: ' + err.message);
+                    console.error('There was an error retrieving your challenge: ' + err.message);
+                } else {
+                    console.log('Successfully retrieved challenge.');
                 }
-                alert('Successfully retrieved challenge.');
                 done(err, data);
             });
         },
@@ -54,9 +56,10 @@ module.exports.create = (createOptions) => {
             challengeKey = encodeURIComponent(key);
             s3.deleteObject({ Key: challengeKey }, function (err, data) {
                 if (err) {
-                    return alert('There was an error deleting your challenge: ', err.message);
+                    console.error('There was an error deleting your challenge: ', err.message);
+                } else {
+                    console.log('Successfully deleted challenge.');
                 }
-                alert('Successfully deleted challenge.');
                 done(err, data);
             });
         }
