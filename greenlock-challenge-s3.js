@@ -22,7 +22,7 @@ module.exports.create = (createOptions) => {
             const s3 = new AWS.S3({ apiVersion: '2006-03-01', params: { Bucket: opts.bucketName } });
 
             challengeKey = encodeURIComponent(key);
-            s3.putObject({ Key: challengeKey, Body: value, Bucket: opts.bucketName }, function (err, data) {
+            s3.putObject({ Key: challengeKey, Body: String(value), Bucket: opts.bucketName }, function (err, data) {
                 if (err) {
                     console.error('There was an error creating your challenge: ' + err.message);
                 } else {
@@ -42,7 +42,7 @@ module.exports.create = (createOptions) => {
                 if (err) {
                     console.error('There was an error retrieving your challenge: ' + err.message);
                 } else {
-                    console.log('Successfully retrieved challenge.');
+                    console.log('Successfully retrieved challenge.' + data);
                 }
                 done(err, data);
             });
