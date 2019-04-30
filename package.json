@@ -14,6 +14,7 @@
   "dependencies": {
     "greenlock": "^2.7.17",
     "greenlock-store-fs": "^3.0.2",
+    "path": "^0.12.7",
     "redirect-https": "^1.3.0",
     "spdy": "^4.0.0"
   }
