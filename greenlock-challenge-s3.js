@@ -40,13 +40,13 @@ module.exports.create = (createOptions) => {
             const s3 = new AWS.S3({ apiVersion: '2006-03-01', params: { Bucket: opts.bucketName } });
 
             challengeKey = encodeURIComponent(key);
-            s3.putObject({ Key: challengeKey, Bucket: opts.bucketName }, function (err, data) {
+            s3.getObject({ Key: challengeKey, Bucket: opts.bucketName }, function (err, data) {
                 if (err) {
                     console.error('There was an error retrieving your challenge: ' + err.message);
                 } else {
-                    console.log('Successfully retrieved challenge.' + data.Body.toString('utf-8'));
+                    console.log('Successfully retrieved challenge.' + data.Body.toString());
                 }
-                done(err, data);
+                done(err, data.Body.toString());
             });
         },
 
