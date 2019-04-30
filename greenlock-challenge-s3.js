@@ -42,9 +42,9 @@ module.exports.create = (createOptions) => {
                 if (err) {
                     console.error('There was an error retrieving your challenge: ' + err.message);
                 } else {
-                    console.log('Successfully retrieved challenge.' + String(data.Body));
+                    console.log('Successfully retrieved challenge.' + String(data['Body']));
                 }
-                done(err, data.Body);
+                done(err, data['Body']);
             });
         },
 
