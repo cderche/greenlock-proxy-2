@@ -19,6 +19,7 @@ var greenlock = Greenlock.create({
     ,   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     ,   bucketName: process.env.AWS_BUCKET_NAME
     ,   bucketRegion: process.env.AWS_BUCKET_REGION
+    ,   directory: 'acme-challenge/'
     })
 });
 
