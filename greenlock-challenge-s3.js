@@ -18,6 +18,8 @@ module.exports.create = (createOptions) => {
 
         set: (opts, domain, key, value, done) => {
 
+            console.log("Key: " + key + ", Value: " + value);
+
             AWS.config.update({ region: opts.bucketRegion, credentials: new AWS.Credentials({ accessKeyId: opts.accessKeyId, secretAccessKey: opts.secretAccessKey }) });
             const s3 = new AWS.S3({ apiVersion: '2006-03-01', params: { Bucket: opts.bucketName } });
 
