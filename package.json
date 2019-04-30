@@ -1,0 +1,12 @@
+{
+  "name": "greenlock-proxy-2",
+  "version": "1.0.0",
+  "description": "a proxy using greenlock.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test",
+    "dev": "node ./index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
