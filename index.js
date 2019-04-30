@@ -8,7 +8,7 @@ var greenlock = Greenlock.create({
 ,   securityUpdates: true
 ,   server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
 ,   version: 'draft-11'
-,   approvedDomains: [ "slave.clientdomain1.com" , "slave.clientdomain2.com" , "example.com" ]
+,   approvedDomains: [ "docker.clientdomain1.com" , "docker.clientdomain2.com" , "node.clientdomain1.com" , "node.clientdomain2.com" ]
 ,   store: require('greenlock-store-fs')
 ,   debug: true
 });
