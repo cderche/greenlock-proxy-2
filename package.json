@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npm run test",
     "build": "npm install",
-    "prod": "node ./index.js"
+    "prod": "node ./index.js",
+    "build_n_run": "npm install && node ./index.js"
   },
   "author": "",
   "license": "ISC",

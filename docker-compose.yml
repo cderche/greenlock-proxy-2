@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    image: 'node:10-alpine'
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - 80:80
+      - 443:443
+    command: npm run build_n_run
