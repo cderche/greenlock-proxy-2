@@ -70,3 +70,9 @@ server.on('listening', function () {
   console.log("Listening for SPDY/http2/https requests on", this.address());
 });
 server.listen(443);
+
+
+var request = require('request-lite');
+request.get('http://docker.clientdomain1.com', function (err, res, body) {
+  console.log('Status Code: %s', res.statusCode);
+});
