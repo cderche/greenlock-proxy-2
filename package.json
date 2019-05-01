@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "aws-cli": "0.0.2",
+    "aws-sdk": "^2.446.0",
+    "bluebird": "^3.5.4",
     "dotenv": "^7.0.0",
     "greenlock": "^2.7.17",
     "greenlock-store-fs": "^3.0.2",

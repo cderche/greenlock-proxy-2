@@ -1,26 +1,33 @@
+require('dotenv').config();
 var Greenlock = require("greenlock");
-require('./greenlock-challenge-s3');
 
 var greenlock = Greenlock.create({
-    email: "cyrille.derche@dokspot.com"
-,   agreeTos: true
-,   configDir: '~/.config/acme'
-,   communityMember: true
-,   securityUpdates: true
-,   server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
-,   version: 'draft-11'
-,   approvedDomains: [ "docker.clientdomain1.com" , "docker.clientdomain2.com" , "node.clientdomain1.com" , "node.clientdomain2.com" ]
-,   store: require('greenlock-store-fs')
-,   debug: true
-,   challengeType: 'http-01'
-,   challenge: require('./greenlock-challenge-s3').create({
-        debug: true
-    ,   accessKeyId: process.env.AWS_ACCESS_KEY_ID
-    ,   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    ,   bucketName: process.env.AWS_BUCKET_NAME
-    ,   bucketRegion: process.env.AWS_BUCKET_REGION
-    ,   directory: 'acme-challenge/'
-    })
+  email: "cyrille.derche@dokspot.com"
+  , agreeTos: true
+  , configDir: 'acme/'
+  , communityMember: true
+  , securityUpdates: true
+  , server: process.env.LETSENCRYPT_ENDPOINT
+  , version: 'draft-11'
+  , approvedDomains: ["docker.clientdomain1.com", "docker.clientdomain2.com", "node.clientdomain1.com", "node.clientdomain2.com", "example.com"]
+  // , store: require('./greenlock-storage-s3').create({
+  //   debug: false
+  //   , accessKeyId: process.env.AWS_ACCESS_KEY_ID
+  //   , secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  //   , bucketName: process.env.AWS_BUCKET_NAME
+  //   , bucketRegion: process.env.AWS_BUCKET_REGION
+  // })
+  , store: require('greenlock-store-fs').create({ debug: true })
+  , debug: false
+  , challengeType: 'http-01'
+  , challenge: require('./greenlock-challenge-s3').create({
+    debug: false
+    , accessKeyId: process.env.AWS_ACCESS_KEY_ID
+    , secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    , bucketName: process.env.AWS_BUCKET_NAME
+    , bucketRegion: process.env.AWS_BUCKET_REGION
+    , directory: 'acme-challenge/'
+  })
 });
 
 ////////////////////////
@@ -45,7 +52,7 @@ require('http').createServer(acmeChallengeHandler).listen(80, function () {
 
 // spdy is a drop-in replacement for the https API
 var spdyOptions = Object.assign({}, greenlock.tlsOptions);
-spdyOptions.spdy = { protocols: [ 'h2', 'http/1.1' ], plain: false };
+spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end('<h1>Hello, 🔐 Secure World!</h1>');
