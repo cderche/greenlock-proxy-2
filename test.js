@@ -13,7 +13,7 @@ var storer = require('./greenlock-storage-s3').create({
     , secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     , bucketName: process.env.AWS_BUCKET_NAME
     , bucketRegion: process.env.AWS_BUCKET_REGION
-    , configDir: 'acme/'
+    , configDir: 'test/acme/'
 })
 
 ////////////////////
@@ -28,7 +28,7 @@ var challenger = require('./greenlock-challenge-s3').create({
     , secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     , bucketName: process.env.AWS_BUCKET_NAME
     , bucketRegion: process.env.AWS_BUCKET_REGION
-    , directory: 'acme-challenge/'
+    , directory: 'test/acme-challenge/'
 });
 
 var domain = 'example.com';
@@ -54,9 +54,9 @@ async.parallel({
     }
 }, function(err, results) {
     if (err) { 
-        console.error('Not all tests passed');
+        console.error('FAILED: Not all tests passed.');
         console.error(err.message);
     } else {
-        console.info("All soft tests: PASSED.");
+        console.info("PASSED: All soft tests.");
     }
 });
