@@ -3,8 +3,10 @@ var async = require('async');
 var colors = require('colors');
 
 var AWS = require('aws-sdk');
+AWS.config.setPromisesDependency(Promise);
+AWS.config.update({ region: process.env.AWS_BUCKET_REGION, credentials: new AWS.Credentials({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY }) });
 
-
+const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 ////////////////
 // Test Store //
@@ -58,7 +60,28 @@ async.parallel({
         })
     }
 }, function(err, results) {
-    if (err) { 
+    console.log('Cleaning up...');
+    
+    s3.listObjects({ Prefix: 'test', Bucket: process.env.AWS_BUCKET_NAME }).promise().then(function(data){
+
+        var objectKeys = [];
+
+        for(let i = 0; i < data.Contents.length; i++){
+            objectKeys.push({
+                Key: data.Contents[i].Key
+            })
+         }
+        
+        s3.deleteObjects({ Delete: { Objects: objectKeys }, Bucket: process.env.AWS_BUCKET_NAME }).promise().then(function (data) {
+            console.log("Clean up successful.".green);
+        }).catch( function(err) {
+            console.error(err.message);
+        });
+    }).catch( function(err) {
+        console.error(err.message);
+    });
+
+    if (err) {
         console.error('FAILED: Not all tests passed.'.red.underline);
         console.error(err.message.red);
     } else {
