@@ -74,5 +74,8 @@ server.listen(443);
 
 var request = require('request-lite');
 request.get('http://docker.clientdomain1.com', function (err, res, body) {
+  if (err) {
+    console.error(err.message);
+  }  
   console.log('Status Code: %s', res.statusCode);
 });
