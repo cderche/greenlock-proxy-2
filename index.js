@@ -10,14 +10,13 @@ var greenlock = Greenlock.create({
   , server: process.env.LETSENCRYPT_ENDPOINT
   , version: 'draft-11'
   , approvedDomains: ["docker.clientdomain1.com", "docker.clientdomain2.com", "node.clientdomain1.com", "node.clientdomain2.com", "example.com"]
-  // , store: require('./greenlock-storage-s3').create({
-  //   debug: false
-  //   , accessKeyId: process.env.AWS_ACCESS_KEY_ID
-  //   , secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  //   , bucketName: process.env.AWS_BUCKET_NAME
-  //   , bucketRegion: process.env.AWS_BUCKET_REGION
-  // })
-  , store: require('greenlock-store-fs').create({ debug: true })
+  , store: require('./greenlock-storage-s3').create({
+    debug: false
+    , accessKeyId: process.env.AWS_ACCESS_KEY_ID
+    , secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    , bucketName: process.env.AWS_BUCKET_NAME
+    , bucketRegion: process.env.AWS_BUCKET_REGION
+  })
   , debug: false
   , challengeType: 'http-01'
   , challenge: require('./greenlock-challenge-s3').create({
