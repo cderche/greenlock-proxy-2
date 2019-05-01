@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+var path = require('path');
 
 const defaultOptions = {
     apiVersion: '2006-03-01'
@@ -19,42 +20,46 @@ module.exports.create = (createOptions) => {
     const handlers = {
         getOptions: () => options,
 
-        set: (opts, domain, key, value, done) => {
+        set: (opts) => {
+            // console.log('opts:', opts);
+            // console.log('options:', options);
 
-            challengeKey = opts.directory + key;
-            s3.putObject({ Key: challengeKey, Body: value, Bucket: opts.bucketName }, function (err, data) {
-                if (err) {
-                    console.error('There was an error creating your challenge: ' + err.message);
-                } else {
-                    console.log('Successfully created challenge.');
-                }
-                done(err, data);
+            var challengeKey = path.join(options.directory, opts.challenge.token);
+            console.log(challengeKey);
+            
+            return s3.putObject({ Key: challengeKey, Body: opts.challenge.keyAuthorization, Bucket: options.bucketName }).promise().then(function (data) {
+                console.log('Successfully created challenge.');
+                return null;
+            }).catch(function (err) {
+                console.error('There was an error creating your challenge: ' + err.message);
+                throw err;
             });
         },
 
-        get: (opts, domain, key, done) => {
+        get: (opts) => {
+            // console.log('opts:', opts);
 
-            challengeKey = opts.directory + key;
-            s3.getObject({ Key: challengeKey, Bucket: opts.bucketName }, function (err, data) {
-                if (err) {
-                    console.error('There was an error retrieving your challenge: ' + err.message);
-                } else {
-                    console.log('Successfully retrieved challenge.' + data.Body.toString());
+            challengeKey = options.directory + opts.challenge.token;
+            return s3.getObject({ Key: challengeKey, Bucket: options.bucketName }).promise().then(function (data) {
+                console.log('Successfully retrieved challenge.' + data.Body.toString());
+                return { 
+                    keyAuthorization: data.Body.toString()
                 }
-                done(err, data.Body.toString());
+            }).catch(function (err) {
+                console.error(err.message);
+                return null;
             });
         },
 
-        remove: (opts, domain, key, done) => {
-
-            challengeKey = opts.directory + key;
-            s3.deleteObject({ Key: challengeKey, Bucket: opts.bucketName }, function (err, data) {
-                if (err) {
-                    console.error('There was an error deleting your challenge: ', err.message);
-                } else {
-                    console.log('Successfully deleted challenge.');
-                }
-                done(err, data);
+        remove: (opts) => {
+            
+            challengeKey = options.directory + opts.challenge.token;
+            return s3.deleteObject({ Key: challengeKey, Bucket: options.bucketName }).promise().then(function (data) {
+                console.log('Successfully deleted challenge.');
+                return data;
+            }).catch(function (err) {
+                console.error('There was an error deleting your challenge: ', err.message);
+                throw err;
             });
         }
     };
