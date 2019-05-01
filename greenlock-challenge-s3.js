@@ -9,16 +9,17 @@ const defaultOptions = {
     , directory: ''
 }
 
+const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
 module.exports.create = (createOptions) => {
     const options = Object.assign({}, defaultOptions, createOptions);
+
+    AWS.config.update({ region: options.bucketRegion, credentials: new AWS.Credentials({ accessKeyId: options.accessKeyId, secretAccessKey: options.secretAccessKey }) });
 
     const handlers = {
         getOptions: () => options,
 
         set: (opts, domain, key, value, done) => {
-
-            AWS.config.update({ region: opts.bucketRegion, credentials: new AWS.Credentials({ accessKeyId: opts.accessKeyId, secretAccessKey: opts.secretAccessKey }) });
-            const s3 = new AWS.S3({ apiVersion: '2006-03-01', params: { Bucket: opts.bucketName } });
 
             challengeKey = opts.directory + key;
             s3.putObject({ Key: challengeKey, Body: value, Bucket: opts.bucketName }, function (err, data) {
@@ -33,9 +34,6 @@ module.exports.create = (createOptions) => {
 
         get: (opts, domain, key, done) => {
 
-            AWS.config.update({ region: opts.bucketRegion, credentials: new AWS.Credentials({ accessKeyId: opts.accessKeyId, secretAccessKey: opts.secretAccessKey }) });
-            const s3 = new AWS.S3({ apiVersion: '2006-03-01', params: { Bucket: opts.bucketName } });
-
             challengeKey = opts.directory + key;
             s3.getObject({ Key: challengeKey, Bucket: opts.bucketName }, function (err, data) {
                 if (err) {
@@ -48,9 +46,6 @@ module.exports.create = (createOptions) => {
         },
 
         remove: (opts, domain, key, done) => {
-
-            AWS.config.update({ region: opts.bucketRegion, credentials: new AWS.Credentials({ accessKeyId: opts.accessKeyId, secretAccessKey: opts.secretAccessKey }) });
-            const s3 = new AWS.S3({ apiVersion: '2006-03-01', params: { Bucket: opts.bucketName } });
 
             challengeKey = opts.directory + key;
             s3.deleteObject({ Key: challengeKey, Bucket: opts.bucketName }, function (err, data) {

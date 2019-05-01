@@ -23,6 +23,7 @@
     "spdy": "^4.0.0"
   },
   "devDependencies": {
+    "greenlock-challenge-test": "^3.0.2",
     "greenlock-store-test": "^3.0.2"
   }
 }
