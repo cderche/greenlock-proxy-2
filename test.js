@@ -1,5 +1,10 @@
 require('dotenv').config();
 var async = require('async');
+var colors = require('colors');
+
+var AWS = require('aws-sdk');
+
+
 
 ////////////////
 // Test Store //
@@ -54,9 +59,9 @@ async.parallel({
     }
 }, function(err, results) {
     if (err) { 
-        console.error('FAILED: Not all tests passed.');
-        console.error(err.message);
+        console.error('FAILED: Not all tests passed.'.red.underline);
+        console.error(err.message.red);
     } else {
-        console.info("PASSED: All soft tests.");
+        console.info("PASSED: All soft tests.".green.underline);        
     }
 });
