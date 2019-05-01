@@ -4,7 +4,7 @@
   "description": "a proxy using greenlock.js",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test",
+    "test": "node ./test.js",
     "build": "npm install",
     "prod": "node ./index.js",
     "build_n_run": "npm install && node ./index.js"
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.2",
     "aws-cli": "0.0.2",
     "aws-sdk": "^2.446.0",
     "bluebird": "^3.5.4",

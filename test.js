@@ -1,4 +1,5 @@
 require('dotenv').config();
+var async = require('async');
 
 ////////////////
 // Test Store //
@@ -14,12 +15,6 @@ var storer = require('./greenlock-storage-s3').create({
     , bucketRegion: process.env.AWS_BUCKET_REGION
     , configDir: 'acme/'
 })
-
-storeTest.test(storer).then(function () {
-    console.info("Passed Test: greenlock-storage-s3");
-}).catch(function (err) {
-    console.error("Failed Test: greenlock-storage-s3")
-});
 
 ////////////////////
 // Test Challange //
@@ -38,8 +33,30 @@ var challenger = require('./greenlock-challenge-s3').create({
 
 var domain = 'example.com';
 
-challengeTest.test('http-01', domain, challenger).then(function () {
-    console.info("Passed Test: greenlock-store-s3");
-}).catch(function (err) {
-    console.error("Failed Test: greenlock-store-s3")
+///////////////
+// Run Tests //
+///////////////
+
+async.parallel({
+    challenge: function(cb) {
+        challengeTest.test('http-01', domain, challenger).then(function () {
+            cb();
+        }).catch(function (err) {
+            cb(err);
+        });
+    },
+    store: function(cb) {
+        storeTest.test(storer).then(function () {
+            cb();
+        }).catch(function (err) {
+            cb(err);
+        })
+    }
+}, function(err, results) {
+    if (err) { 
+        console.error('Not all tests passed');
+        console.error(err.message);
+    } else {
+        console.info("All soft tests: PASSED.");
+    }
 });

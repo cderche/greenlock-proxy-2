@@ -22,6 +22,7 @@ const defaultOptions = {
     , bucketName: null
     , bucketRegion: null
     , accountsDir: path.join("accounts", new URL(process.env.LETSENCRYPT_ENDPOINT).host, new URL(process.env.LETSENCRYPT_ENDPOINT).pathname)
+    , configDir: 'acme/'
 }
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
