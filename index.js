@@ -2,8 +2,8 @@ require('dotenv').config();
 
 var http = require('http-debug').http;
 var https = require('http-debug').https;
-http.debug = 2;
-https.debug = 2;
+http.debug = 1;
+https.debug = 1;
 
 var Greenlock = require("greenlock");
 
