@@ -167,7 +167,7 @@ module.exports.create = function (createOptions) {
         },
         accounts: {
             check: (opts) => {
-                console.log("accounts.check");
+                console.log("accounts.check", opts.account.id);
                 // console.log(opts);
             },
             checkKeypair: (opts) => {
