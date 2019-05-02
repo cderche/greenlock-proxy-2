@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-var http = require('http-debug').http;
-http.debug = 2;
+// var http = require('http-debug').http;
+// http.debug = 2;
 
 var colors = require('colors');
 
