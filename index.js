@@ -2,8 +2,8 @@ require('dotenv').config();
 
 var http = require('http-debug').http;
 var https = require('http-debug').https;
-http.debug = 1;
-https.debug = 1;
+http.debug = 0;
+https.debug = 0;
 
 var colors = require('colors');
 
@@ -45,6 +45,7 @@ var greenlock = Greenlock.create({
 // http-01 challenge happens over http/1.1, not http2
 var redirectHttps = require('redirect-https')();
 var acmeChallengeHandler = greenlock.middleware(function (req, res) {
+  console.log('REQUEST RECEIVED'.yellow);
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end('<h1>Hello, ⚠️ Insecure World!</h1><a>Visit Secure Site</a>');
 });

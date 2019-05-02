@@ -7,6 +7,5 @@ services:
       - 80:80
       - 443:443
     command: npm run build_n_run
-    # command: node ./example.js
     volumes:
       - .:/app
