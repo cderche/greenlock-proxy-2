@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-var http = require('http-debug').http;
-var https = require('http-debug').https;
-http.debug = 0;
-https.debug = 0;
+// var http = require('http-debug').http;
+// var https = require('http-debug').https;
+// http.debug = 0;
+// https.debug = 0;
 
 var colors = require('colors');
 
