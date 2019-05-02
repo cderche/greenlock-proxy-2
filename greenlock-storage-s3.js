@@ -48,28 +48,28 @@ module.exports.create = function (createOptions) {
 
                 return Promise.all([
                     s3.getObject({ Key: privkeyPath, Bucket: options.bucketName }).promise().then(function (data) {
-                        console.log('Successfully retrieved certificate privkey.pem:', data.Body.toString());
+                        console.log('Successfully retrieved certificate privkey.pem');
                         return data.Body.toString();
                     }).catch(function (err) {
                         console.error('There was an error retrieving your certificate privkey.pem:', err.message);
                         throw err;
                     }),
                     s3.getObject({ Key: certPath, Bucket: options.bucketName }).promise().then(function (data) {
-                        console.log('Successfully retrieved certificate cert.pem:', data.Body.toString());
+                        console.log('Successfully retrieved certificate cert.pem');
                         return data.Body.toString();
                     }).catch(function (err) {
                         console.error('There was an error retrieving your certificate cert.pem:', err.message);
                         throw err;
                     }),
                     s3.getObject({ Key: chainPath, Bucket: options.bucketName }).promise().then(function (data) {
-                        console.log('Successfully retrieved certificate chain.pem:', data.Body.toString());
+                        console.log('Successfully retrieved certificate chain.pem');
                         return data.Body.toString();
                     }).catch(function (err) {
                         console.error('There was an error retrieving your certificate chain.pem:', err.message);
                         throw err;
                     })
                 ]).then(function (values) {
-                    console.log('Promise.all(values):', values);
+                    // console.log('Promise.all(values):', values);
 
                     return {
                         privkey: values[0]
@@ -90,7 +90,7 @@ module.exports.create = function (createOptions) {
                 jwkKeyPath = certificatesPath(options, id, fileNames.privkey.jwk);
 
                 return s3.getObject({ Key: pemKeyPath, Bucket: options.bucketName }).promise().then(function (data) {
-                        console.log('Successfully retrieved certificate PEM keypair:', data.Body.toString());
+                        console.log('Successfully retrieved certificate PEM keypair.');
                         return {
                             privateKeyPem: data.Body.toString()
                         }
