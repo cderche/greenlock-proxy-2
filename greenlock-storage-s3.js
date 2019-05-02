@@ -40,7 +40,7 @@ module.exports.create = function (createOptions) {
             check: (opts) => {
 
                 var id = opts.certificate && opts.certificate.id || opts.subject;
-                console.log('certificates.check for', opts.certificate, opts.subject);
+                console.log('certificates.check for', opts.subject);
 
                 var privkeyPath = certificatesPath(options, id, fileNames.privkey.pem);
                 var certPath = certificatesPath(options, id, fileNames.cert);
@@ -82,7 +82,7 @@ module.exports.create = function (createOptions) {
                 });
             },
             checkKeypair: (opts) => {
-                console.log('certificates.checkKeypair:', opts.certificate, opts.subject);
+                console.log('certificates.checkKeypair for', opts.subject);
 
                 id = opts.certificate.kid || opts.certificate.id || opts.subject;
 
@@ -116,7 +116,7 @@ module.exports.create = function (createOptions) {
                 });
             },
             set: (opts) => {
-                console.log('certificates.set:', opts.subject, opts.pems);
+                console.log('certificates.set for ', opts.subject);
 
                 var pems = {
                     cert: opts.pems.cert
@@ -190,7 +190,7 @@ module.exports.create = function (createOptions) {
 
             },
             setKeypair: (opts) => {
-                console.log('accounts.setKeypair for', opts.account, opts.email, opts.keypair);
+                console.log('accounts.setKeypair for', opts.account);
 
                 var id = opts.account.id || opts.email || 'single-user';
                 key = accountsPath(options, id)
