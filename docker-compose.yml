@@ -10,4 +10,4 @@ services:
     command: npm run build_n_run
     volumes:
       - .:/app
-    network_mode: host
+    # network_mode: host
