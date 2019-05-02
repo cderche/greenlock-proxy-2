@@ -7,7 +7,7 @@
     "test": "node ./test.js",
     "build": "npm install",
     "prod": "node ./index.js",
-    "build_n_run": "npm install && node ./index.js"
+    "build_n_run": "npm run build && npm run prod"
   },
   "author": "",
   "license": "ISC",
