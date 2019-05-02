@@ -168,7 +168,7 @@ module.exports.create = function (createOptions) {
         accounts: {
             check: (opts) => {
                 console.log("accounts.check");
-                console.log(opts);
+                // console.log(opts);
             },
             checkKeypair: (opts) => {
                 var id = opts.account.id || opts.email || 'single-user';
