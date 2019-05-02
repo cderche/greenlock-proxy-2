@@ -5,6 +5,8 @@ var https = require('http-debug').https;
 http.debug = 1;
 https.debug = 1;
 
+var colors = require('colors');
+
 var Greenlock = require("greenlock");
 
 var greenlock = Greenlock.create({
@@ -77,9 +79,9 @@ server.listen(443);
 function makeRequest() {
   var request = require('request-lite');
   request.get('http://docker.clientdomain1.com', function (err, res, body) {
-    console.log('Received response');
+    console.log('RESPONSE');
     if (err) {
-      console.error(err.message);
+      console.error('ERROR: %s'.red, err.message);
     } else {
       console.log('Status Code: %s', res.statusCode);
     }
