@@ -2,8 +2,8 @@ require('dotenv').config();
 
 var http = require('http-debug').http;
 var https = require('http-debug').https;
-http.debug = 1;
-https.debug = 1;
+http.debug = 0;
+https.debug = 0;
 
 var Greenlock = require("greenlock");
 
@@ -68,15 +68,20 @@ server.on('error', function (err) {
 });
 server.on('listening', function () {
   console.log("Listening for SPDY/http2/https requests on", this.address());
+
+  makeRequest();
 });
 server.listen(443);
 
 
-var request = require('request-lite');
-request.get('http://docker.clientdomain1.com', function (err, res, body) {
-  if (err) {
-    console.error(err.message);
-  } else {
-    console.log('Status Code: %s', res.statusCode);
-  }
-});
+function makeRequest() {
+  var request = require('request-lite');
+  request.get('http://docker.clientdomain1.com', function (err, res, body) {
+    console.log('Received response');
+    if (err) {
+      console.error(err.message);
+    } else {
+      console.log('Status Code: %s', res.statusCode);
+    }
+  });
+}
