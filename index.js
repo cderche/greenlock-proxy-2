@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-// var http = require('http-debug').http;
-// http.debug = 2;
+var httpProxy = require('http-proxy');
+var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET});
 
 var colors = require('colors');
 
@@ -63,8 +63,9 @@ require('http').createServer(acmeChallengeHandler).listen(80, function () {
 var spdyOptions = Object.assign({}, greenlock.tlsOptions);
 spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.end('<h1>Hello, 🔐 Secure World!</h1>');
+  // res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  // res.end('<h1>Hello, 🔐 Secure World!</h1>');
+  return proxy.web(req, res);
 });
 server.on('error', function (err) {
   console.error(err);
@@ -72,7 +73,7 @@ server.on('error', function (err) {
 server.on('listening', function () {
   console.log("Listening for SPDY/http2/https requests on", this.address());
 
-  makeRequest();
+  // makeRequest();
 });
 server.listen(443);
 
