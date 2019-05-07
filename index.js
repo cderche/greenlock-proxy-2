@@ -68,6 +68,7 @@ spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
 
   var params = url.parse(req.url, true).query
+  console.log(req.url);
   console.log(params);
   
 
