@@ -1,7 +1,8 @@
 require('dotenv').config();
 
-var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_HOST}});
+// var httpProxy = require('http-proxy');
+// var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_HOST}});
+s3Proxy = require('s3-proxy');
 
 var colors = require('colors');
 
@@ -65,7 +66,13 @@ spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
   // res.setHeader('Content-Type', 'text/html; charset=utf-8');
   // res.end('<h1>Hello, 🔐 Secure World!</h1>');
-  return proxy.web(req, res);
+  // return proxy.web(req, res);
+  return s3Proxy({
+    bucket: process.env.PROXY_BUCKET_NAME
+    , accessKeyId: process.env.AWS_ACCESS_KEY_ID
+    , secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    , overrideCacheControl: 'max-age=100000'
+  })
 });
 server.on('error', function (err) {
   console.error(err);
