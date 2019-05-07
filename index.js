@@ -67,11 +67,10 @@ var spdyOptions = Object.assign({}, greenlock.tlsOptions);
 spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
 
-  var params = url.parse(req.url, true).query
-  console.log(req.url);
-  console.log(params);
+  if (req.url === '/') {
+    req.url = '/index.html'
+  }
   
-
   proxy.get(req,res).on('error', (err) => {
     console.error(err);
     res.end()
