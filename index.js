@@ -2,7 +2,7 @@ require('dotenv').config();
 
 // var httpProxy = require('http-proxy');
 // var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_HOST}});
-const S3Proxy = require('s3-proxy');
+const S3Proxy = require('s3proxy');
 const proxy = new S3Proxy({ bucket: process.env.PROXY_BUCKET_NAME });
 proxy.init();
 
