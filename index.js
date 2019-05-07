@@ -18,7 +18,7 @@ var greenlock = Greenlock.create({
   , securityUpdates: true
   , server: process.env.LETSENCRYPT_ENDPOINT
   , version: 'draft-11'
-  , approvedDomains: ["docker.clientdomain1.com", "docker.clientdomain2.com", "node.clientdomain1.com", "node.clientdomain2.com", "example.com", "ssl.d-ifu.com", "connect.clientdomain3.com"]
+  , approvedDomains: require('./approvedDomains').approvedDomains
   , store: require('./greenlock-storage-s3').create({
     debug: false
     , accessKeyId: process.env.AWS_ACCESS_KEY_ID
