@@ -1,9 +1,7 @@
 require('dotenv').config();
 
-// var httpProxy = require('http-proxy');
-// var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_TARGET }});
-
-request = require('request');
+var httpProxy = require('http-proxy');
+var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET});
 
 var colors = require('colors');
 
@@ -67,8 +65,7 @@ spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
   // res.setHeader('Content-Type', 'text/html; charset=utf-8');
   // res.end('<h1>Hello, 🔐 Secure World!</h1>');
-  // return proxy.web(req, res);
-  request(process.env.PROXY_TARGET).pipe(res);
+  return proxy.web(req, res);
 });
 server.on('error', function (err) {
   console.error(err);
