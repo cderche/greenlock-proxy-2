@@ -1,10 +1,10 @@
 require('dotenv').config();
 
-// var httpProxy = require('http-proxy');
-// var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_HOST}});
 const S3Proxy = require('s3proxy');
 const proxy = new S3Proxy({ bucket: process.env.PROXY_BUCKET_NAME });
 proxy.init();
+
+var url = require('url');
 
 var colors = require('colors');
 
@@ -66,9 +66,11 @@ require('http').createServer(acmeChallengeHandler).listen(80, function () {
 var spdyOptions = Object.assign({}, greenlock.tlsOptions);
 spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
-  // res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  // res.end('<h1>Hello, 🔐 Secure World!</h1>');
-  // return proxy.web(req, res);
+
+  var params = url.parse(req.url, true).query
+  console.log(params);
+  
+
   proxy.get(req,res).on('error', (err) => {
     console.error(err);
     res.end()
