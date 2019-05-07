@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET});
+var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_HOST}});
 
 var colors = require('colors');
 
