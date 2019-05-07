@@ -1,7 +1,9 @@
 require('dotenv').config();
 
-var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_TARGET }});
+// var httpProxy = require('http-proxy');
+// var proxy = httpProxy.createProxyServer({target: process.env.PROXY_TARGET, headers: { Host: process.env.PROXY_TARGET }});
+
+request = require('request');
 
 var colors = require('colors');
 
@@ -65,27 +67,13 @@ spdyOptions.spdy = { protocols: ['h2', 'http/1.1'], plain: false };
 var server = require('spdy').createServer(spdyOptions, function (req, res) {
   // res.setHeader('Content-Type', 'text/html; charset=utf-8');
   // res.end('<h1>Hello, 🔐 Secure World!</h1>');
-  return proxy.web(req, res);
+  // return proxy.web(req, res);
+  request(process.env.PROXY_TARGET).pipe(res);
 });
 server.on('error', function (err) {
   console.error(err);
 });
 server.on('listening', function () {
   console.log("Listening for SPDY/http2/https requests on", this.address());
-
-  // makeRequest();
 });
 server.listen(443);
-
-
-function makeRequest() {
-  var request = require('request-lite');
-  request.get('http://docker.clientdomain1.com', function (err, res, body) {
-    console.log('RESPONSE');
-    if (err) {
-      console.error('ERROR: %s'.red, err.message);
-    } else {
-      console.log('Status Code: %s', res.statusCode);
-    }
-  });
-}

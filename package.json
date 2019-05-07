@@ -24,6 +24,7 @@
     "http-proxy": "^1.17.0",
     "path": "^0.12.7",
     "redirect-https": "^1.3.0",
+    "request": "^2.88.0",
     "request-lite": "^2.40.1",
     "spdy": "^4.0.0"
   },
