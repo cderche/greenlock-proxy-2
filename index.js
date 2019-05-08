@@ -13,12 +13,11 @@ var Greenlock = require("greenlock");
 var greenlock = Greenlock.create({
   email: "cyrille.derche@dokspot.com"
   , agreeTos: true
-  , configDir: 'acme/'
   , communityMember: true
   , securityUpdates: true
   , server: process.env.LETSENCRYPT_ENDPOINT
   , version: 'draft-11'
-  , approvedDomains: ['docker.clientdomain1.com', 'docker.clientdomain2.com' ] // require('./approvedDomains').approvedDomains
+  , approvedDomains: [ 'docker.clientdomain1.com', 'docker.clientdomain2.com' ] // require('./approvedDomains').approvedDomains
   , store: require('./greenlock-storage-s3').create({
     debug: false
     , accessKeyId: process.env.AWS_ACCESS_KEY_ID
